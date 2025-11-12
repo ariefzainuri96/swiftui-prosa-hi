@@ -8,10 +8,12 @@
 
 /* Begin PBXBuildFile section */
 		501BB03A2EC1C4080048E19D /* Swinject in Frameworks */ = {isa = PBXBuildFile; productRef = 501BB0392EC1C4080048E19D /* Swinject */; };
+		50F954102EC4492900E1DB59 /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 50F9540F2EC4492400E1DB59 /* .gitignore */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		50EB7EFF2EBDDC2C000EF404 /* ProsaHi.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ProsaHi.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		50F9540F2EC4492400E1DB59 /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -52,6 +54,7 @@
 			children = (
 				50EB7F002EBDDC2C000EF404 /* Products */,
 				50EB7F012EBDDC2C000EF404 /* ProsaHi */,
+				50F9540F2EC4492400E1DB59 /* .gitignore */,
 			);
 			sourceTree = "<group>";
 		};
@@ -131,6 +134,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				50F954102EC4492900E1DB59 /* .gitignore in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
