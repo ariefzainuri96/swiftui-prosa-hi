@@ -7,12 +7,10 @@
 
 import Foundation
 
-struct MainService {
-    private let networkService = NetworkService()
-    
+class MainService: NetworkService {
     func getUser(_ username: String) async -> (user: GithubUserModel?, error: String?) {
         do {
-            let user = try await networkService.get("/\(username)", responseType: GithubUserModel.self)
+            let user = try await get("/\(username)", responseType: GithubUserModel.self)
             
             return (user, nil)
         } catch CustomError.generalError(let error) {

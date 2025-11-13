@@ -20,7 +20,7 @@ class DiModule {
         
         /*
          .inObjectScope determine the lifetime of the instance
-         */
+         */            
         
         container.register(SessionManager.self) { _ in
             SessionManager()
@@ -37,8 +37,6 @@ class DiModule {
              return HomeViewModel(networkService: networkService)
          }
          */
-        
-        print("dependencies registered...")
     }
 }
 

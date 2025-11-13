@@ -9,7 +9,7 @@ import Foundation
 
 @MainActor
 class MainViewModel: ObservableObject {
-    private var mainService = MainService()
+    private let mainService = MainService()
     
     @Published var username = ""
     @Published var password = ""
