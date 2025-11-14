@@ -14,10 +14,10 @@ class LoginViewModel: ObservableObject {
     
     @Published var loginData = LoginData()
     
-    private var sessionManager: SessionManager
+    private var appRouter: AppRouter
     
     init() {
-        sessionManager = diModule.resolve(SessionManager.self)
+        appRouter = diModule.resolve(AppRouter.self)
     }
     
     @MainActor
@@ -36,6 +36,6 @@ class LoginViewModel: ObservableObject {
         
         loginData.state = .success
         
-        sessionManager.login(newToken: response.token ?? "")
+        appRouter.login(response.token ?? "")
     }
 }

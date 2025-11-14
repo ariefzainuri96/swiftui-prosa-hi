@@ -7,29 +7,35 @@
 
 import SwiftUI
 
-struct DetailView: View {
+struct ArticleView: View {
+    let content: String
+
     private let diModule = DiModule.shared
-    
+
     private var appRouter: AppRouter
-    
-    init() {
+
+    init(content: String) {
         appRouter = diModule.resolve(AppRouter.self)
+
+        self.content = content
     }
-    
+
     var body: some View {
         ZStack {
             Color.white
-            
+
             ScrollView {
                 VStack(alignment: .leading) {
-                    Text("DetailView").foregroundStyle(.black)
+                    Text("Article View").foregroundStyle(.black)
                     
+                    Text("Content: \(content)").foregroundStyle(.black)
+
                     Button(
                         action: {
-                            appRouter.navigate(to: .forgot, shouldCount: true)
+                            appRouter.popToRoot(useNavigateCount: true)
                         },
                         label: {
-                            Text("Forgot")
+                            Text("Back To Detail")
                         })
                 }
                 .frame(maxWidth: .infinity, alignment: .leading)
@@ -39,5 +45,5 @@ struct DetailView: View {
 }
 
 #Preview {
-    DetailView()
+    ArticleView(content: "Tes")
 }

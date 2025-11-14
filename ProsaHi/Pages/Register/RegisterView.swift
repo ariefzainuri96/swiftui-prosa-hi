@@ -12,12 +12,10 @@ struct RegisterView: View {
     private let diModule = DiModule.shared
 
     @StateObject private var registerVM = RegisterViewModel()
-
-    private var sessionManager: SessionManager
+    
     private var appRouter: AppRouter
 
     init() {
-        sessionManager = diModule.resolve(SessionManager.self)
         appRouter = diModule.resolve(AppRouter.self)
     }
 

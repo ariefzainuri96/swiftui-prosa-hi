@@ -7,29 +7,37 @@
 
 import SwiftUI
 
-struct DetailView: View {
+struct ForgotView: View {
     private let diModule = DiModule.shared
-    
+
     private var appRouter: AppRouter
-    
+
     init() {
         appRouter = diModule.resolve(AppRouter.self)
     }
-    
+
     var body: some View {
         ZStack {
             Color.white
-            
+
             ScrollView {
                 VStack(alignment: .leading) {
-                    Text("DetailView").foregroundStyle(.black)
+                    Text("Forgot View").foregroundStyle(.black)
+
+                    Button(
+                        action: {
+                            appRouter.navigate(to: .article(content: "From Forgot View"), shouldCount: true)
+                        },
+                        label: {
+                            Text("Article")
+                        })
                     
                     Button(
                         action: {
-                            appRouter.navigate(to: .forgot, shouldCount: true)
+                            appRouter.logout()
                         },
                         label: {
-                            Text("Forgot")
+                            Text("Logout")
                         })
                 }
                 .frame(maxWidth: .infinity, alignment: .leading)
@@ -39,5 +47,7 @@ struct DetailView: View {
 }
 
 #Preview {
-    DetailView()
+    if #available(iOS 16.0, *) {
+        DetailView()
+    }
 }

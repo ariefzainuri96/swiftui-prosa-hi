@@ -14,10 +14,7 @@ class RegisterViewModel: ObservableObject {
     
     @Published var registerData = RegisterData()
     
-    private var sessionManager: SessionManager
-    
-    init() {
-        sessionManager = diModule.resolve(SessionManager.self)
+    init() {        
     }
     
     @MainActor

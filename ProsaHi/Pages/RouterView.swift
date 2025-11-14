@@ -11,7 +11,6 @@ import Swinject
 struct RouterView: View {
     private let diModule = DiModule.shared
 
-    @StateObject private var mainVM = MainViewModel()
     @StateObject private var appRouter: AppRouter
 
     init() {
@@ -20,34 +19,16 @@ struct RouterView: View {
     }
 
     var body: some View {
-
         if #available(iOS 16.0, *) {
             NavigationStack(path: appRouter.pathBinding) {
-                MainView()
+                destinationView(route: appRouter.initialRoute)
                     .navigationDestination(for: Routes.self) { route in
                         destinationView(route: route)
                     }
             }
         } else {
             NavigationView {
-                MainView()
-                    .background(
-                        NavigationLink(
-                            isActive: Binding(
-                                get: { appRouter.selectedRoute != nil },
-                                set: { isActive in
-                                    if !isActive {
-                                        appRouter.selectedRoute = nil
-                                    }
-                                }
-                            )
-                        ) {
-                            destinationView(route: appRouter.selectedRoute)
-                        } label: {
-                            EmptyView()
-                        }
-                        .hidden()
-                    )
+                destinationView(route: appRouter.selectedRoute == nil ? .splash : appRouter.selectedRoute)
             }
         }
     }
@@ -65,6 +46,14 @@ struct RouterView: View {
                 DetailView()
             case .register:
                 RegisterView()
+            case .splash:
+                SplashView().task {
+                    await appRouter.checkSession()
+                }
+            case .forgot:
+                ForgotView()
+            case let .article(content):
+                ArticleView(content: content)
             }
         } else {
             EmptyView()

@@ -12,16 +12,11 @@ struct LoginView: View {
     private let diModule = DiModule.shared
 
     @StateObject private var loginVM = LoginViewModel()
-
-    @StateObject private var sessionManager: SessionManager
-    @StateObject private var appRouter: AppRouter
+    
+    private var appRouter: AppRouter
 
     init() {
-        let sessionManager = diModule.resolve(SessionManager.self)
-        let appRouter = diModule.resolve(AppRouter.self)
-
-        _sessionManager = StateObject(wrappedValue: sessionManager)
-        _appRouter = StateObject(wrappedValue: appRouter)
+        appRouter = diModule.resolve(AppRouter.self)
     }
 
     var body: some View {
@@ -81,7 +76,7 @@ struct LoginView: View {
             .frame(maxWidth: .infinity, alignment: .center)
             .padding(.horizontal, 16)
         }
-
+        .navigationBarBackButtonHidden(true)
     }
 }
 

@@ -20,11 +20,7 @@ class DiModule {
         
         /*
          .inObjectScope determine the lifetime of the instance
-         */            
-        
-        container.register(SessionManager.self) { _ in
-            SessionManager()
-        }.inObjectScope(.container)
+         */
         
         container.register(AppRouter.self) { _ in
             AppRouter()

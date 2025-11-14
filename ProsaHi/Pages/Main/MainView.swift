@@ -13,15 +13,10 @@ struct MainView: View {
     private let diModule = DiModule.shared
 
     @StateObject private var mainVM = MainViewModel()
-    @StateObject private var sessionManager: SessionManager
-    @StateObject private var appRouter: AppRouter
+    private var appRouter: AppRouter
 
     init() {
-        let sessionManager = diModule.resolve(SessionManager.self)
-        let appRouter = diModule.resolve(AppRouter.self)
-
-        _sessionManager = StateObject(wrappedValue: sessionManager)
-        _appRouter = StateObject(wrappedValue: appRouter)
+        appRouter = diModule.resolve(AppRouter.self)
     }
 
     var body: some View {
@@ -63,24 +58,18 @@ struct MainView: View {
 
                     Button(
                         action: {
-                            appRouter.navigate(to: Routes.detail)
+                            appRouter.navigate(to: .detail)
                         },
                         label: {
                             Text("Detail")
                         })
-
-                    Button(
-                        action: {
-                            sessionManager.logout()
-                        },
-                        label: {
-                            Text("Logout")
-                        })
+                    
                 }.padding(.horizontal, 10)
             }
         }
         .navigationTitle("Main")
         .navigationBarTitleDisplayMode(.inline)
+        .navigationBarBackButtonHidden(true)
     }
 }
 
