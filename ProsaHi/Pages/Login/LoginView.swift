@@ -70,9 +70,9 @@ struct LoginView: View {
                     CustomText("Don't have an account? ").foregroundStyle(
                         Colors.gray1)
                     CustomText("Sign up", underline: true, weight: .medium)
-                        .foregroundStyle(Colors.gray1)
+                        .foregroundStyle(Colors.primary)
                         .onTapGesture {
-                            print("signup")
+                            appRouter.navigate(to: .register)
                         }
                 }.frame(maxWidth: .infinity, alignment: .center).pad(
                     top: 10, bottom: 16)

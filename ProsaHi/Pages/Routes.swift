@@ -11,4 +11,5 @@ enum Routes: Hashable {
     case main
     case login
     case detail
+    case register
 }

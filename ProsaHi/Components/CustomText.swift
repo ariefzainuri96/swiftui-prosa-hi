@@ -18,18 +18,20 @@ struct CustomText: View {
     var size: CGFloat
     var weight: FontWeight
     var underline: Bool
+    var underlineColor: Color?
 
-    init(_ content: String, size: CGFloat = 16, underline: Bool = false, weight: FontWeight = .regular) {
+    init(_ content: String, size: CGFloat = 16, underline: Bool = false, underlineColor: Color? = nil, weight: FontWeight = .regular) {
         self.content = content
         self.size = size
         self.underline = underline
         self.weight = weight
+        self.underlineColor = underlineColor
     }
 
     var body: some View {
         Text(content)
             .font(.custom(getFont(), size: size))
-            .underline(underline)
+            .underline(underline, color: underlineColor)
     }
     
     private func getFont() -> String {
@@ -45,5 +47,5 @@ struct CustomText: View {
 }
 
 #Preview {
-    CustomText("asdasd", weight: .regular)
+    CustomText("asdasd", underline: true, underlineColor: Colors.primary, weight: .regular).foregroundStyle(Colors.primary)
 }

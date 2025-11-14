@@ -63,6 +63,8 @@ struct RouterView: View {
                 LoginView()
             case .detail:
                 DetailView()
+            case .register:
+                RegisterView()
             }
         } else {
             EmptyView()
