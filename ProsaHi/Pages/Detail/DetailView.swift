@@ -11,6 +11,7 @@ struct DetailView: View {
     private let diModule = DiModule.shared
     
     private var appRouter: AppRouter
+    @StateObject private var detailVM = DetailViewModel()
     
     init() {
         appRouter = diModule.resolve(AppRouter.self)
@@ -23,6 +24,8 @@ struct DetailView: View {
             ScrollView {
                 VStack(alignment: .leading) {
                     Text("DetailView").foregroundStyle(.black)
+                    
+                    Text(detailVM.isUpdateProfile ? "Profile Updated" : "Profile Not Updated")
                     
                     Button(
                         action: {

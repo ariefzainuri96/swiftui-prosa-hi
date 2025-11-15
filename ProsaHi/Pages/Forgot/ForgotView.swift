@@ -11,9 +11,11 @@ struct ForgotView: View {
     private let diModule = DiModule.shared
 
     private var appRouter: AppRouter
+    private var globalVM: GlobalViewModel
 
     init() {
         appRouter = diModule.resolve(AppRouter.self)
+        globalVM = diModule.resolve(GlobalViewModel.self)
     }
 
     var body: some View {
@@ -31,6 +33,12 @@ struct ForgotView: View {
                         label: {
                             Text("Article")
                         })
+                    
+                    Button(action: {
+                        globalVM.shouldUpdateView = true
+                    }) {
+                        Text("Do something")
+                    }
                     
                     Button(
                         action: {

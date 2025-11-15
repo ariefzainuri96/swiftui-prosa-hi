@@ -64,6 +64,14 @@ struct MainView: View {
                             Text("Detail")
                         })
                     
+                    Button(
+                        action: {
+                            appRouter.navigate(to: .article(content: "Woke"))
+                        },
+                        label: {
+                            Text("Article")
+                        })
+                    
                 }.padding(.horizontal, 10)
             }
         }

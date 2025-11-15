@@ -26,6 +26,10 @@ class DiModule {
             AppRouter()
         }.inObjectScope(.container)
         
+        container.register(GlobalViewModel.self) { _ in
+            GlobalViewModel()
+        }.inObjectScope(.container)
+        
         /*
          // Example when need another object for the constructor injection
          container.register(AppRouter.self) { resolver in
