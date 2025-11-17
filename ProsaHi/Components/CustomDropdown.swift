@@ -14,16 +14,25 @@ struct CustomDropdown<T: Hashable, Content: View>: View {
     let label: String?
     let showAsterisk: Bool
     let content: (T) -> Content
-    
-    init(selection: Binding<T>, valueStr: String, showAsterisk: Bool, options: [T], label: String?, @ViewBuilder content: @escaping (T) -> Content) {
+    let state: PageState
+    let action: () -> Void
+
+    init(
+        selection: Binding<T>, state: PageState = .idle, valueStr: String,
+        showAsterisk: Bool, options: [T], label: String?,
+        action: @escaping () -> Void = {},
+        @ViewBuilder content: @escaping (T) -> Content
+    ) {
         self._selection = selection
         self.options = options
         self.valueStr = valueStr
         self.label = label
+        self.state = state
         self.showAsterisk = showAsterisk
         self.content = content
+        self.action = action
     }
-    
+
     var body: some View {
         VStack(alignment: .leading) {
             if label != nil {
@@ -34,7 +43,7 @@ struct CustomDropdown<T: Hashable, Content: View>: View {
                     }
                 }
             }
-            
+
             Menu {
                 ForEach(options, id: \.self) { option in
                     Button(action: {
@@ -45,9 +54,17 @@ struct CustomDropdown<T: Hashable, Content: View>: View {
                 }
             } label: {
                 HStack {
-                    CustomText(valueStr).foregroundStyle(Colors.font)
+                    CustomState(
+                        state: state,
+                        content: {
+                            CustomText(valueStr).foregroundStyle(Colors.font)
+                        }, reload: {
+                            action()
+                        })
+
                     Spacer()
-                    Image(systemName: "chevron.down").foregroundStyle(Colors.font)
+                    Image(systemName: "chevron.down").foregroundStyle(
+                        Colors.font)
                 }
                 .padding(16)
                 .background(Colors.gray2)
@@ -58,10 +75,16 @@ struct CustomDropdown<T: Hashable, Content: View>: View {
 }
 
 #Preview {
-    let options: [JenisSpesialisResponse] = [JenisSpesialisResponse(id: 1, nama: "A"), JenisSpesialisResponse(id: 2, nama: "B")]
+    let options: [JenisSpesialisResponse] = [
+        JenisSpesialisResponse(id: 1, nama: "A"),
+        JenisSpesialisResponse(id: 2, nama: "B"),
+    ]
     @State var data = JenisSpesialisResponse(id: 1, nama: "Test")
-    
-    CustomDropdown(selection: $data, valueStr: data.nama ?? "", showAsterisk: true, options: options, label: "Testing Dropdown") { option in
+
+    CustomDropdown(
+        selection: $data, valueStr: data.nama ?? "", showAsterisk: true,
+        options: options, label: "Testing Dropdown"
+    ) { option in
         CustomText(option.nama ?? "")
     }
 }

@@ -23,6 +23,8 @@ class RegisterViewModel: ObservableObject {
     
     init() {
         globalVM = diModule.resolve(GlobalViewModel.self)
+        
+        setupSubscribers()
     }
     
     private func setupSubscribers() {
@@ -57,6 +59,8 @@ class RegisterViewModel: ObservableObject {
     
     @MainActor
     func getJenisSpesialis() async {
+        print("getJenisSpesialis")
+        
         bidangIlmuState = .loading
         
         let (response, _) = await registerService.getJenisSpesialis()

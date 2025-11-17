@@ -19,7 +19,7 @@ struct RegisterView: View {
     init() {
         let globalVM = diModule.resolve(GlobalViewModel.self)
         _globalVM = StateObject(wrappedValue: globalVM)
-        
+
         appRouter = diModule.resolve(AppRouter.self)
     }
 
@@ -83,8 +83,20 @@ struct RegisterView: View {
                     if registerVM.registerData.request.jenisAkun
                         == "Tenaga Kesehatan"
                     {
-                        // dropdown                        
-                        CustomDropdown(selection: $registerVM.registerData.request.bidangIlmu, valueStr: registerVM.registerData.request.bidangIlmu?.nama ?? "Pilih bidang ilmu...", showAsterisk: true, options: registerVM.bidangIlmuList, label: "Bidang Ilmu") { option in
+                        CustomDropdown(
+                            selection: $registerVM.registerData.request
+                                .bidangIlmu, state: registerVM.bidangIlmuState,
+                            valueStr: registerVM.registerData.request
+                                .bidangIlmu?.nama ?? "Pilih bidang ilmu...",
+                            showAsterisk: true,
+                            options: registerVM.bidangIlmuList,
+                            label: "Bidang Ilmu",
+                            action: {
+                                Task {
+                                    await registerVM.getJenisSpesialis()
+                                }
+                            }
+                        ) { option in
                             CustomText(option?.nama ?? "")
                         }.pad(top: 16)
 
@@ -112,7 +124,7 @@ struct RegisterView: View {
                         CustomText("Already have an account? ").foregroundStyle(
                             Colors.gray1)
                         CustomText("Login", underline: true, weight: .medium)
-                            .foregroundStyle(Colors.gray1)
+                            .foregroundStyle(Colors.primary)
                             .onTapGesture {
                                 appRouter.pop()
                             }
