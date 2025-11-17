@@ -8,19 +8,21 @@
 import SwiftUI
 
 struct CustomTapInput: View {
-    var value: String
+    var content: String
+    @Binding var value: String
     var selected: Bool
-    var action: () -> Void
     
-    init(value: String, selected: Bool, action: @escaping @MainActor () -> Void) {
-        self.value = value
+    init(_ content: String, value: Binding<String>, selected: Bool) {
+        self.content = content
+        self._value = value
         self.selected = selected
-        self.action = action
     }
     
     var body: some View {
-        Button(action: action) {
-            CustomText(value, weight: .medium)
+        Button(action: {
+            value = content
+        }) {
+            CustomText(content, weight: .medium)
                 .foregroundStyle(selected ? Colors.white : Colors.font)
                 .padding(.horizontal, 16)
                 .padding(.vertical, 10.5)
@@ -35,5 +37,7 @@ struct CustomTapInput: View {
 }
 
 #Preview {
-    CustomTapInput(value: "Test", selected: false, action: {})
+    @State var value = ""
+    
+    CustomTapInput("Testing", value: $value, selected: false)
 }

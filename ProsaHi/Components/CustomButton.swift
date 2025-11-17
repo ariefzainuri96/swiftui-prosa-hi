@@ -37,7 +37,7 @@ struct CustomButton: View {
                     .progressViewStyle(CircularProgressViewStyle(tint: enable ? .white : Colors.font))
             } else {
                 CustomText(content, weight: .bold)
-                    .foregroundStyle(enable ? .white : Colors.font)
+                    .foregroundStyle(enable ? .white : Colors.gray1)
             }
         }
         .pad(vertical: horizontalPad, horizontal: verticalPad)
@@ -48,5 +48,5 @@ struct CustomButton: View {
 }
 
 #Preview {
-    CustomButton(content: "Test123", isExpanded: true, action: {})
+    CustomButton(content: "Test123", isExpanded: true, enable: false, action: {})
 }

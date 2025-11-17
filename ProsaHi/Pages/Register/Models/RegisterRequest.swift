@@ -8,13 +8,12 @@
 import Foundation
 
 struct RegisterRequest {
+    var nama: String = ""
     var username: String = ""
     var password: String = ""
-    var nama: String = ""
     var jenisAkun: String = ""
-    var bidangIlmu: Int? = nil
+    var bidangIlmu: JenisSpesialisResponse? = nil
     var suratTandaRegistrasi: String = ""
-    var fcm_token: String = ""
 
     struct Body: Codable {
         let username: String
@@ -26,7 +25,7 @@ struct RegisterRequest {
     }
 
     var encodableBody: Body {
-        Body(username: username, password: password, nama: nama, role: jenisAkun == "Akun Normal" ? "user" : "tenkes", jenis_id: bidangIlmu ?? 0, nostr: suratTandaRegistrasi)
+        Body(username: username, password: password, nama: nama, role: jenisAkun == "Akun Normal" ? "user" : "tenkes", jenis_id: bidangIlmu?.id ?? 0, nostr: suratTandaRegistrasi)
     }
 
     func isValid() -> Bool {

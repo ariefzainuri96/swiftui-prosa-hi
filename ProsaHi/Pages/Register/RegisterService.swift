@@ -19,4 +19,16 @@ class RegisterService: NetworkService {
             return (nil, error.localizedDescription)
         }
     }
+    
+    func getJenisSpesialis() async -> (response: [JenisSpesialisResponse]?, error: String?) {
+        do {
+            let response = try await get("/jenis-spesialis", responseType: [JenisSpesialisResponse].self)
+            
+            return (response, nil)
+        } catch CustomError.generalError(let error) {
+            return (nil, error)
+        } catch {
+            return (nil, error.localizedDescription)
+        }
+    }
 }

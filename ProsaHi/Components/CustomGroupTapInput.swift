@@ -10,18 +10,15 @@ import SwiftUI
 struct CustomGroupTapInput<Content: View>: View {
     var label: String?
     var showAsterisk: Bool
-    @Binding var value: String
     var textSize: CGFloat
     let groupTap: () -> Content
 
     init(
-        value: Binding<String>,
         label: String? = nil,
         showAsterisk: Bool = false,
         textSize: CGFloat = 16,
         @ViewBuilder groupTap: @escaping () -> Content
     ) {
-        self._value = value
         self.label = label
         self.showAsterisk = showAsterisk
         self.textSize = textSize
@@ -46,9 +43,9 @@ struct CustomGroupTapInput<Content: View>: View {
 #Preview {
     @State var value = ""
 
-    CustomGroupTapInput(value: $value, label: "Tole", showAsterisk: true) {
+    CustomGroupTapInput(label: "Tole", showAsterisk: true) {
         HStack {
-            CustomTapInput(value: "Test Tap", selected: false, action: {})
+            CustomTapInput("Test Tap", value: $value, selected: false)
         }
     }
 }
