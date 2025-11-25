@@ -13,7 +13,9 @@ class RegisterViewModel: ObservableObject {
     private let diModule = DiModule.shared
     private let registerService = RegisterService()
     
-    @Published var registerData = RegisterData()
+    @Published var request = RegisterRequest()
+    @Published var state = PageState.idle
+    @Published var obsecure = true
     @Published var bidangIlmuList: [JenisSpesialisResponse] = []
     @Published var bidangIlmuState = PageState.idle
     
@@ -29,10 +31,10 @@ class RegisterViewModel: ObservableObject {
     
     private func setupSubscribers() {
         // Listen to changes
-        $registerData
+        $request
             .receive(on: RunLoop.main)
             .sink { [weak self] newValue in
-                if newValue.request.jenisAkun == "Tenaga Kesehatan" && self?.bidangIlmuState == .idle {
+                if newValue.jenisAkun == "Tenaga Kesehatan" && self?.bidangIlmuState == .idle {
                     Task {
                         await self?.getJenisSpesialis()
                     }
@@ -43,16 +45,16 @@ class RegisterViewModel: ObservableObject {
     
     @MainActor
     func performRegister() async {
-        registerData.state = .loading
+        state = .loading
         
-        let (response, _) =  await registerService.register(request: registerData.request)
+        let (response, _) =  await registerService.register(request: request)
         
         guard let response = response else {
-            registerData.state = .error
+            state = .error
             return
         }
         
-        registerData.state = .success
+        state = .success
         
         globalVM.showToast("Berhasil membuat akun, silahkan login!")
     }

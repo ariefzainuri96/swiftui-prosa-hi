@@ -30,33 +30,32 @@ struct RegisterView: View {
             ScrollView {
                 VStack(alignment: .leading) {
                     CustomTextField(
-                        value: $registerVM.registerData.request.nama,
+                        value: $registerVM.request.nama,
                         label: "Nama", showAsterisk: true,
                         placeholder: "Masukan nama..."
                     ).pad(top: 16)
 
                     CustomTextField(
-                        value: $registerVM.registerData.request.username,
+                        value: $registerVM.request.username,
                         label: "Username", showAsterisk: true,
                         placeholder: "Masukan username..."
                     ).pad(top: 16)
 
                     CustomTextField(
-                        value: $registerVM.registerData.request.password,
+                        value: $registerVM.request.password,
                         label: "Password",
                         showAsterisk: true,
                         placeholder: "Enter your password...",
                         height: 30,
-                        obsecure: registerVM.registerData.obsecure,
+                        obsecure: registerVM.obsecure,
                         suffix: {
-                            CustomText(
-                                registerVM.registerData.obsecure
-                                    ? "Show" : "Hide",
-                                size: 14, weight: .medium
-                            )
-                            .foregroundStyle(Colors.gray3)
+                            Image(systemName: registerVM.obsecure ? "eye.slash.fill" : "eye.fill")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 24, height: 24)
+                            .foregroundColor(Colors.gray1)
                             .onTapGesture {
-                                registerVM.registerData.obsecure.toggle()
+                                registerVM.obsecure.toggle()
                             }
                         }
                     ).padding(.top, 16)
@@ -66,27 +65,27 @@ struct RegisterView: View {
                         HStack(spacing: 16) {
                             CustomTapInput(
                                 "Akun Normal",
-                                value: $registerVM.registerData.request
+                                value: $registerVM.request
                                     .jenisAkun,
-                                selected: registerVM.registerData.request
+                                selected: registerVM.request
                                     .jenisAkun == "Akun Normal")
 
                             CustomTapInput(
                                 "Tenaga Kesehatan",
-                                value: $registerVM.registerData.request
+                                value: $registerVM.request
                                     .jenisAkun,
-                                selected: registerVM.registerData.request
+                                selected: registerVM.request
                                     .jenisAkun == "Tenaga Kesehatan")
                         }
                     }.pad(top: 16)
 
-                    if registerVM.registerData.request.jenisAkun
+                    if registerVM.request.jenisAkun
                         == "Tenaga Kesehatan"
                     {
                         CustomDropdown(
-                            selection: $registerVM.registerData.request
+                            selection: $registerVM.request
                                 .bidangIlmu, state: registerVM.bidangIlmuState,
-                            valueStr: registerVM.registerData.request
+                            valueStr: registerVM.request
                                 .bidangIlmu?.nama ?? "Pilih bidang ilmu...",
                             showAsterisk: true,
                             options: registerVM.bidangIlmuList,
@@ -101,7 +100,7 @@ struct RegisterView: View {
                         }.pad(top: 16)
 
                         CustomTextField(
-                            value: $registerVM.registerData.request
+                            value: $registerVM.request
                                 .suratTandaRegistrasi,
                             label: "Surat Tanda Registrasi", showAsterisk: true,
                             placeholder: "Masukan surat tanda registrasi..."
@@ -110,9 +109,9 @@ struct RegisterView: View {
 
                     CustomButton(
                         content: "Register",
-                        enable: registerVM.registerData.request.isValid()
-                            && registerVM.registerData.state != .loading,
-                        state: registerVM.registerData.state,
+                        enable: registerVM.request.isValid()
+                            && registerVM.state != .loading,
+                        state: registerVM.state,
                         action: {
                             Task {
                                 await registerVM.performRegister()

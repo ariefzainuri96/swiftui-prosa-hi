@@ -35,25 +35,21 @@ struct RouterView: View {
 
     @ViewBuilder
     private func destinationView(route: Routes?) -> some View {
-
+        
         if let route = route {
             switch route {
             case .main:
                 MainView()
             case .login:
                 LoginView()
-            case .detail:
-                DetailView()
             case .register:
                 RegisterView()
             case .splash:
                 SplashView().task {
                     await appRouter.checkSession()
                 }
-            case .forgot:
-                ForgotView()
-            case let .article(content):
-                ArticleView(content: content)
+//            case let .article(content):
+//                ArticleView(content: content)
             }
         } else {
             EmptyView()

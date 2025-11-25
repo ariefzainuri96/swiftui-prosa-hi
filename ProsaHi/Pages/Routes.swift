@@ -11,8 +11,8 @@ enum Routes: Hashable {
     case splash
     case main
     case login
-    case detail
+//    case detail
     case register
-    case forgot
-    case article(content: String)
+//    case forgot
+//    case article(content: String)
 }
