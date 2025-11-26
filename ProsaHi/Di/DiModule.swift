@@ -22,13 +22,13 @@ class DiModule {
          .inObjectScope determine the lifetime of the instance
          */
         
-        container.register(AppRouter.self) { _ in
-            AppRouter()
-        }.inObjectScope(.container)
-        
-        container.register(GlobalViewModel.self) { _ in
-            GlobalViewModel()
-        }.inObjectScope(.container)
+//        container.register(AppRouter.self) { _ in
+//            AppRouter()
+//        }.inObjectScope(.container)
+//        
+//        container.register(GlobalViewModel.self) { _ in
+//            GlobalViewModel()
+//        }.inObjectScope(.container)
         
         /*
          // Example when need another object for the constructor injection

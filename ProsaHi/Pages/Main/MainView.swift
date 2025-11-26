@@ -10,41 +10,38 @@ import Swinject
 
 struct MainView: View {
 
+    private let diModule = DiModule.shared
+
     @State private var selectedTab = 0
-    
+
+//    @EnvironmentObject private var router: Router<AppRoutes>
+
+    //    var appRouter: AppRouter
+    //
+    //    init() {
+    //        appRouter = diModule.resolve(AppRouter.self)
+    //    }
+
     var body: some View {
-        
-        TabView {
+
+        TabView(selection: $selectedTab) {
+
             HomeView()
                 .tabItem {
                     Image(systemName: "house")
                     Text("Home")
                 }
                 .tag(0)
-            
+
             BincangView()
                 .tabItem {
                     Image(systemName: "message")
                     Text("Bincang")
                 }
                 .tag(1)
-            
-            MateriView()
-                .tabItem {
-                    Image(systemName: "newspaper")
-                    Text("Materi")
-                }
-                .tag(2)
-            
-            ProfileView()
-                .tabItem {
-                    Image(systemName: "person.crop.circle")
-                    Text("Profile")
-                }
-                .tag(3)
+
         }
-        
-//        .navigationBarBackButtonHidden(true)
+        .navigationBarBackButtonHidden(true)
     }
 }
 

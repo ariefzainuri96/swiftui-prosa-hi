@@ -12,16 +12,7 @@ struct RegisterView: View {
     private let diModule = DiModule.shared
 
     @StateObject private var registerVM = RegisterViewModel()
-    @StateObject private var globalVM: GlobalViewModel
-
-    private var appRouter: AppRouter
-
-    init() {
-        let globalVM = diModule.resolve(GlobalViewModel.self)
-        _globalVM = StateObject(wrappedValue: globalVM)
-
-        appRouter = diModule.resolve(AppRouter.self)
-    }
+    @EnvironmentObject private var router: Router<AppRoutes>
 
     var body: some View {
         ZStack {
@@ -114,7 +105,7 @@ struct RegisterView: View {
                         state: registerVM.state,
                         action: {
                             Task {
-                                await registerVM.performRegister()
+                                await registerVM.performRegister(router)
                             }
                         }
                     ).pad(top: 16)
@@ -125,7 +116,7 @@ struct RegisterView: View {
                         CustomText("Login", underline: true, weight: .medium)
                             .foregroundStyle(Colors.primary)
                             .onTapGesture {
-                                appRouter.pop()
+                                router.navigateBack()
                             }
                     }.frame(maxWidth: .infinity, alignment: .center).pad(
                         top: 8, bottom: 16)
@@ -136,7 +127,7 @@ struct RegisterView: View {
             }
         }
         .navigationTitle("Buat Akun")
-        .toast($globalVM.toast)
+        .toast($router.toast)
     }
 }
 

@@ -8,6 +8,14 @@
 import SwiftUI
 
 struct BincangView: View {
+    private let diModule = DiModule.shared
+    
+//    private var appRouter: AppRouter
+//    
+//    init() {
+//        appRouter = diModule.resolve(AppRouter.self)
+//    }
+    
     var body: some View {
         ZStack {
             Color.white
@@ -15,6 +23,10 @@ struct BincangView: View {
             ScrollView {
                 VStack(alignment: .leading, spacing: 0) {
                     Text("Bincang")
+                    
+                    CustomButton(content: "Anak", action: {
+//                        appRouter.navigate(to: .anak)
+                    })
                 }
             }
         }

@@ -20,12 +20,12 @@ struct RegisterRequest {
         let password: String
         let nama: String
         let role: String
-        let jenis_id: Int
-        let nostr: String
+        let jenis_id: Int?
+        let nostr: String?
     }
 
     var encodableBody: Body {
-        Body(username: username, password: password, nama: nama, role: jenisAkun == "Akun Normal" ? "user" : "tenkes", jenis_id: bidangIlmu?.id ?? 0, nostr: suratTandaRegistrasi)
+        Body(username: username, password: password, nama: nama, role: jenisAkun == "Akun Normal" ? "user" : "tenkes", jenis_id: bidangIlmu?.id, nostr: suratTandaRegistrasi.isEmpty ? nil : suratTandaRegistrasi)
     }
 
     func isValid() -> Bool {

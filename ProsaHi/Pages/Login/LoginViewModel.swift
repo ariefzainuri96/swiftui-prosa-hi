@@ -14,15 +14,16 @@ class LoginViewModel: ObservableObject {
     
     @Published var loginData = LoginData()
     
-    private var appRouter: AppRouter
+    @AppStorage(AppStorageConst.userToken) private var token = ""
     
-    init() {
-        appRouter = diModule.resolve(AppRouter.self)
-    }
+//    private var appRouter: AppRouter
+//    
+//    init() {
+//        appRouter = diModule.resolve(AppRouter.self)
+//    }
     
     @MainActor
-    func performLogin() async {
-        // MARK: set fcm
+    func performLogin(_ router: Router<AppRoutes>) async {
         loginData.request.fcm_token = "123"
         
         loginData.state = .loading
@@ -36,6 +37,8 @@ class LoginViewModel: ObservableObject {
         
         loginData.state = .success
         
-        appRouter.login(response.token ?? "")
+        token = response.token ?? ""
+        
+        router.replaceAll(to: .main)
     }
 }

@@ -13,11 +13,14 @@ struct LoginView: View {
 
     @StateObject private var loginVM = LoginViewModel()
     
-    private var appRouter: AppRouter
-
-    init() {
-        appRouter = diModule.resolve(AppRouter.self)
-    }
+    @EnvironmentObject private var router: Router<AppRoutes>
+    
+//    var appRouter: AppRouter
+////    private var appRouter: AppRouter
+////
+//    init() {
+//        appRouter = diModule.resolve(AppRouter.self)
+//    }
 
     var body: some View {
         ZStack {
@@ -57,7 +60,7 @@ struct LoginView: View {
                     state: loginVM.loginData.state,
                     action: {
                         Task {
-                            await loginVM.performLogin()
+                            await loginVM.performLogin(router)
                         }
                     })
 
@@ -67,7 +70,8 @@ struct LoginView: View {
                     CustomText("Sign up", underline: true, weight: .medium)
                         .foregroundStyle(Colors.primary)
                         .onTapGesture {
-                            appRouter.navigate(to: .register)
+//                            appRouter.navigate(to: .register)
+                            router.navigate(to: .register)
                         }
                 }.frame(maxWidth: .infinity, alignment: .center).pad(
                     top: 10, bottom: 16)

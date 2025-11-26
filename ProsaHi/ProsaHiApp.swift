@@ -9,10 +9,13 @@ import SwiftUI
 
 @main
 struct ProsaHiApp: App {
+    
+    @StateObject private var appRoutes: Router<AppRoutes>  = .init()    
 
     var body: some Scene {
         WindowGroup {
-            RouterView()
+            ContentView()
+                .environmentObject(appRoutes)
         }
     }
 }
